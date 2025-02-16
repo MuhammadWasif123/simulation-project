@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background: linear-gradient(
+    45deg,
+    hsl(240deg 24% 11%) 0%,
+    hsl(257deg 32% 13%) 6%,
+    hsl(265deg 37% 14%) 11%,
+    hsl(269deg 41% 15%) 17%,
+    hsl(271deg 44% 16%) 22%,
+    hsl(273deg 47% 16%) 28%,
+    hsl(275deg 49% 17%) 33%,
+    hsl(276deg 51% 18%) 39%,
+    hsl(276deg 53% 19%) 44%,
+    hsl(277deg 55% 19%) 50%,
+    hsl(278deg 56% 20%) 56%,
+    hsl(278deg 57% 21%) 61%,
+    hsl(279deg 58% 21%) 67%,
+    hsl(279deg 59% 22%) 72%,
+    hsl(279deg 60% 22%) 78%,
+    hsl(280deg 61% 23%) 83%,
+    hsl(280deg 62% 23%) 89%,
+    hsl(280deg 63% 24%) 94%,
+    hsl(280deg 63% 25%) 100%
+  );
+}
+
+.custom-margin{
+  margin-left:auto;
+  margin-right:auto;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
