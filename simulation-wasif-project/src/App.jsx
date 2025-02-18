@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
 
-
 export default function SimulatorApp() {
   const [columns, setColumns] = useState([]);
   const [data, setData] = useState([]);
   const [arrivalColumn, setArrivalColumn] = useState("");
   const [serviceColumn, setServiceColumn] = useState("");
   const [results, setResults] = useState([]);
-  const [averageTurnAround,setAverageTurnAround]=useState(0);
-  const [averageWait,setAverageWait]=useState(0);
-  const [averageResponse,setAverageResponse]=useState(0);
+  const [averageTurnAround, setAverageTurnAround] = useState(0);
+  const [averageWait, setAverageWait] = useState(0);
+  const [averageResponse, setAverageResponse] = useState(0);
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
@@ -54,7 +53,8 @@ export default function SimulatorApp() {
 
     const results = [];
     data.forEach((item, index) => {
-      const arrival = timeToInt(item[arrivalColumn]) || 0;
+      const arrival = Math.floor(timeToInt(item[arrivalColumn])) || 0;
+      console.log("Arrival time int", Math.floor(arrival));
       const serviceTime = parseFloat(item[serviceColumn]) || 0;
 
       let startTime =
@@ -99,22 +99,17 @@ export default function SimulatorApp() {
     setAverageTurnAround(averageTurnAround);
     setAverageWait(averageWait);
     setAverageResponse(averageResponse);
-  //  console.log("Average Turn Around",averageTurnAround);
-  //  console.log("Average Wait",averageWait);
-  //  console.log("Average Response",averageResponse);
   };
 
   return (
     <div className="flex w-full flex-col items-start mt-4 min-h-screen px-4 py-3 lg:container lg:mx-auto  xl:max-w-[1695px] xl:custom-margin">
       <h1 className="text-xl font-bold mb-4 text-gray-100">Simulation App</h1>
-
       <input
         type="file"
         accept=".xlsx, .csv"
         onChange={handleFileUpload}
         className="mb-4 block text-gray-100"
       />
-
       {columns.length > 0 && (
         <div className="space-y-4 text-[#fff]">
           <div>
@@ -153,66 +148,70 @@ export default function SimulatorApp() {
           </div>
         </div>
       )}
-
       <button
         onClick={handleSimulation}
         className="bg-blue-500 text-[#000] px-4 py-2 mt-4 rounded"
       >
         Start Simulation
       </button>
-
       <div className="flex justify-center gap-4">
+        <div>
+          {results.length > 0 && (
+            <table className="table-auto w-full mt-6 border text-[#fff]">
+              <thead>
+                <tr>
+                  <th className="border px-4 py-2">Start Time</th>
+                  <th className="border px-4 py-2">End Time</th>
+                  <th className="border px-4 py-2">Turnaround Time</th>
+                  <th className="border px-4 py-2">Wait Time</th>
+                  <th className="border px-4 py-2">Response Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {results.map((result, index) => (
+                  <tr key={index}>
+                    <td className="border px-4 py-2">
+                      {intToTime(parseFloat(result.startTime.toFixed(2)))}
+                    </td>
+                    <td className="border px-4 py-2">
+                      {intToTime(parseFloat(result.endTime.toFixed(2)))}
+                    </td>
+                    <td className="border px-4 py-2">
+                      {result.turnAroundTime.toFixed(2)}
+                    </td>
+                    <td className="border px-4 py-2">
+                      {result.waitTime.toFixed(2)}
+                    </td>
+                    <td className="border px-4 py-2">
+                      {result.responseTime.toFixed(2)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
 
         <div>
-      {results.length > 0 && (
-        <table className="table-auto w-full mt-6 border text-[#fff]">
-          <thead>
-            <tr>
-              <th className="border px-4 py-2">Start Time</th>
-              <th className="border px-4 py-2">End Time</th>
-              <th className="border px-4 py-2">Turnaround Time</th>
-              <th className="border px-4 py-2">Wait Time</th>
-              <th className="border px-4 py-2">Response Time</th>
-            </tr>
-          </thead>
-          <tbody>
-            {results.map((result, index) => (
-              <tr key={index}>
-                <td className="border px-4 py-2">
-                  {intToTime(parseFloat(result.startTime.toFixed(2)))}
-                </td>
-                <td className="border px-4 py-2">
-                  {intToTime(parseFloat(result.endTime.toFixed(2)))}
-                </td>
-                <td className="border px-4 py-2">
-                  {result.turnAroundTime.toFixed(2)}
-                </td>
-                <td className="border px-4 py-2">
-                  {result.waitTime.toFixed(2)}
-                </td>
-                <td className="border px-4 py-2">
-                  {result.responseTime.toFixed(2)}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-      </div>
- 
-      <div>
-    {results.length>0 && (
-        <div className="mt-6 p-4 border rounded text-[#fff]">
-          <p><strong>Average TurnAround Time: </strong>{averageTurnAround.toFixed(2)}</p>
-          <p><strong>Average Wait Time: </strong>{averageWait.toFixed(2)}</p>
-          <p><strong>Average Response Time:</strong>{averageResponse.toFixed(2)}</p>
+          {results.length > 0 && (
+            <div className="mt-6 p-4 border rounded text-[#fff]">
+              <p>
+                <strong>Average TurnAround Time: </strong>
+                {averageTurnAround.toFixed(2)}
+              </p>
+              <p>
+                <strong>Average Wait Time: </strong>
+                {averageWait.toFixed(2)}
+              </p>
+              <p>
+                <strong>Average Response Time:</strong>
+                {averageResponse.toFixed(2)}
+              </p>
+            </div>
+          )}
         </div>
-     )
-     }
-     </div>
-     </div>
-    
-
-    </div>
-  );
+      </div>
+         
+    </div>
+  );
 }
